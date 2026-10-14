@@ -1,0 +1,9 @@
+pandas>=2.0.0
+requests>=2.31.0
+mwclient>=0.10.1
+schema>=0.7.5
+google-api-python-client>=2.100.0
+networkx>=3.0
+pytest>=8.0.0
+qdrant-client>=1.7.0
+neo4j>=5.15.0
