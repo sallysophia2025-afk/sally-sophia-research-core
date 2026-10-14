@@ -18,3 +18,22 @@ def test_csv_structure_and_no_missing_critical():
     assert "claim_text" in df.columns
     assert df["claim_id"].isnull().sum() == 0
     assert df["claim_text"].isnull().sum() == 0
+
+# Policy verification tests
+JPAIS_DIR = Path("policies/JPAIS_MED_REF")
+
+def test_jpais_policy_blueprints_exist():
+    assert (JPAIS_DIR / "JPAIS_BLUEPRINT.md").exists()
+    assert (JPAIS_DIR / "ATTESTATION_THRESHOLDS.json").exists()
+    assert (JPAIS_DIR / "PHYSICIAN_OVERSIGHT_STANDARDS.md").exists()
+    assert (JPAIS_DIR / "README.md").exists()
+
+def test_attestation_thresholds_valid_json():
+    import json
+    with open(JPAIS_DIR / "ATTESTATION_THRESHOLDS.json") as f:
+        data = json.load(f)
+    assert "risk_tiers" in data
+    assert "TIER_1_INFORMATIONAL" in data["risk_tiers"]
+    assert "TIER_2_CLINICAL_DECISION_SUPPORT" in data["risk_tiers"]
+    assert "TIER_3_HIGH_ACUITY_INTERVENTION" in data["risk_tiers"]
+    assert data["drift_circuit_breakers"]["population_stability_index_trip"] == 0.25

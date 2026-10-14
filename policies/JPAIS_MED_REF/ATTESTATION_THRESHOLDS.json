@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JPAIS-MED-REF Attestation Thresholds & Autonomy Levels",
+  "version": "1.0.0",
+  "risk_tiers": {
+    "TIER_1_INFORMATIONAL": {
+      "description": "General medical knowledge retrieval, coding assistance, and literature search.",
+      "autonomy_level": "Level 1: Informational",
+      "minimum_calibration_score": 0.70,
+      "physician_sign_off_required": false,
+      "audit_retention_days": 365
+    },
+    "TIER_2_CLINICAL_DECISION_SUPPORT": {
+      "description": "Diagnostic suggestions, risk stratification, and medication interaction checks.",
+      "autonomy_level": "Level 2: Advisory",
+      "minimum_calibration_score": 0.85,
+      "minimum_auroc": 0.88,
+      "physician_sign_off_required": true,
+      "override_logging_mandatory": true,
+      "audit_retention_days": 1825
+    },
+    "TIER_3_HIGH_ACUITY_INTERVENTION": {
+      "description": "Critical care telemetry alerts, surgical navigation, radiation dosing guidance.",
+      "autonomy_level": "Level 3: Supervised Execution",
+      "minimum_calibration_score": 0.95,
+      "minimum_auroc": 0.94,
+      "physician_sign_off_required": true,
+      "dual_physician_verification": true,
+      "circuit_breaker_psi_threshold": 0.15,
+      "audit_retention_days": 3650
+    }
+  },
+  "drift_circuit_breakers": {
+    "population_stability_index_warn": 0.10,
+    "population_stability_index_trip": 0.25,
+    "fallback_mode": "IMMEDIATE_DEGRADATION_TO_MANUAL"
+  }
+}
