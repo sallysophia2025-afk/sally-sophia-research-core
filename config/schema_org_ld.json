@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SallySophiaSchemaOrgMedicalEntity",
+  "type": "object",
+  "required": ["@context", "@type", "@id", "name", "description", "publishingPrinciples"],
+  "properties": {
+    "@context": { "type": "string", "enum": ["https://schema.org"] },
+    "@type": { "type": "string", "enum": ["MedicalEntity", "Legislation", "Statement"] },
+    "@id": { "type": "string" },
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "publishingPrinciples": { "type": "string" },
+    "legislationJurisdiction": { "type": "string" },
+    "citation": { "type": "string" },
+    "status": { "type": "string" }
+  },
+  "additionalProperties": true
+}
