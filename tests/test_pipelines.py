@@ -37,3 +37,19 @@ def test_attestation_thresholds_valid_json():
     assert "TIER_2_CLINICAL_DECISION_SUPPORT" in data["risk_tiers"]
     assert "TIER_3_HIGH_ACUITY_INTERVENTION" in data["risk_tiers"]
     assert data["drift_circuit_breakers"]["population_stability_index_trip"] == 0.25
+
+# Generator verification tests
+def test_generator_module_exists_and_imports():
+    from src.generator import deterministic_grounded_summary, SYSTEM_INSTRUCTION
+    assert len(SYSTEM_INSTRUCTION) > 100
+    mock_records = [{
+        "claim_id": "CLM-ACAD-031",
+        "claim_text": "Test claim text",
+        "authorities": ["KMK 1423"],
+        "jurisdictions": ["Indonesia"],
+        "evidence_url": "https://jdih.kemkes.go.id"
+    }]
+    summary = deterministic_grounded_summary("Test Query", mock_records)
+    assert "CLM-ACAD-031" in summary
+    assert "KMK 1423" in summary
+    assert "https://jdih.kemkes.go.id" in summary
